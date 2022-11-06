@@ -8,9 +8,9 @@ function App({ data, schema }) {
   const handleYaxis = (event) => setYaxis(event.target.value);
   return (
     <div>
-      <div className="grid grid-cols-2">
-        <div onChange={handleXaxis}>
-          X Axis
+      <div className="grid grid-cols-2 p-5 gap-5">
+        <div className="p-5 border-2 rounded" onChange={handleXaxis}>
+          <div className="font-bold">X Axis</div>
           <div className="grid grid-cols-3">
             {attrs.map(attr => (
               <div key={`xaxis-${attr}`}>
@@ -20,8 +20,8 @@ function App({ data, schema }) {
             ))}
           </div>
         </div>
-        <div onChange={handleYaxis}>
-          Y Axis
+        <div className="p-5 border-2 rounded" onChange={handleYaxis}>
+          <div className="font-bold">Y Axis</div>
           <div className="grid grid-cols-3">
             {attrs.map(attr => (
               <div key={`yaxis-${attr}`}>
@@ -32,20 +32,21 @@ function App({ data, schema }) {
           </div>
         </div>
       </div>
-      { xaxis === 'none' || (
-          <div className={`grid grid-cols-${schema[xaxis].length + 1}`}>
-            <div></div>
-            {schema[xaxis].map(col => (
-              <div>{col}</div>
-            ))
-            }
-            { yaxis === 'none' || schema[yaxis].map(row => (
+      { xaxis === 'none' || yaxis === 'none' || (
+          <div className={`grid grid-cols-${schema[xaxis].length} p-5 gap-5`}>
+            {schema[yaxis].map(row => (
               <>
-                <div>{row}</div>
                 {schema[xaxis].map(col => (
-                  <div>{data.filter(item => item[xaxis] === col && item[yaxis] === row).map(item => (
-                    <img className="inline" src={item.image} width="20" height="20" loading="lazy" />
-                  ))}</div>
+                  <div>
+                    <div className="text-xs">
+                      {`${row}/${col}`}
+                    </div>
+                    <div>
+                      {data.filter(item => item[xaxis] === col && item[yaxis] === row).map(item => (
+                        <img className="inline" src={item.image} width="20" height="20" loading="lazy" />
+                      ))}
+                    </div>
+                  </div>
                 ))
                 }
               </>
